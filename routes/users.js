@@ -31,12 +31,13 @@ router.post("/login", (req, res, next) => {
                     }
                     // Payload: user; secretOrPrivateKey: ?; options: verifyOptions, callback: error + token
                     // TODO: get a valid private key
-                    jwt.sign({user}, '', verifyOptions, (err, token) => {
-                        if (err) throw err
+                    jwt.sign({user}, 'secret', verifyOptions, (err, token) => {
                         res.json({
-                            token
+                            token: token,
+                            message: `Login successful, hello ${user.firstname}`
                         })
                     })
+
                 }
                 else {
                     return res.status(404).json({ passwordincorrect: "Password incorrect, please make sure you haven't made any typos" }) // Notify that the password was incorrect
@@ -68,7 +69,7 @@ router.post("/login2", async (req, res, next) => {
             }
             // Payload: user; secretOrPrivateKey: ?; options: verifyOptions, callback: error + token
             // TODO: get a valid private key
-            jwt.sign({user}, '', verifyOptions, (err, token) => {
+            jwt.sign({user}, 'secret', verifyOptions, (err, token) => {
                 if (err) throw err
                 res.json({
                     token
@@ -128,37 +129,36 @@ router.get("/allUsers", (req, res, next) => { //R
 })
 
 router.post("/updateUser", (req, res, next) => {
-    let firstname = req.body.firstname
-    let lastname = req.body.lastname
-    let email = req.body.email
-    let password = req.body.password // hash?
-    let updateFirstname = req.body.updateFirstname
-    let updateLastname = req.body.updateLastname
-    let updateEmail = req.body.updateEmail
-    let updatePassword = req.body.updatePassword
+    const firstname = req.body.firstname
+    const lastname = req.body.lastname
+    const email = req.body.email
 
-    bcrypt.hash(updatePassword, saltRounds,  (error, hash) => {
+    const updateFirstname = req.body.updateFirstname
+    const updateLastname = req.body.updateLastname
+    const updateEmail = req.body.updateEmail
+    const updatePassword = req.body.updatePassword
+
+    bcrypt.hash(updatePassword, saltRounds,  (err, hash) => {
         if (err) throw err
         userModel.findOneAndUpdate(
-            {firstname, lastname, email, password /* hash? */},
-            {firstname: updateFirstname, lastname: updateLastname, email: updateEmail, password: hash}
+            {firstname, lastname, email},
+            {firstname: updateFirstname, lastname: updateLastname, email: updateEmail, password: hash},
+            {new: true} // returns the updates fields instead of the old ones
         )
-            .save()
             .then(user => res.send(user))
             .catch(err => {
                 console.log(err)
                 res.status(404).send(err)
-            })
+            });
     })
 })
 
 router.delete("/deleteUser", (req, res, next) => { //D
-    let firstname = req.body.firstname
-    let lastname = req.body.lastname
-    let email = req.body.email
-    let password = req.body.password // hash?
+    // const firstname = req.body.firstname
+    // const lastname = req.body.lastname
+    const email = req.body.email
 
-    res.send(userModel.findOneAndDelete({ firstname, lastname, email, password }))
+    userModel.findOneAndDelete({ email: email })
         .then(user => {
             console.log("User successfully deleted")
             res.send(user)
