@@ -7,7 +7,6 @@ const databaseName = 'aracer-db'
 const databaseUser = 'Raphael:aracer123'
 const connectionURL = `mongodb+srv://${databaseUser}@aracer.w4nfr.mongodb.net/${databaseName}?retryWrites=true&w=majority` || `mongodb://127.0.0.1:27017/${databaseName}`
 
-const port = process.env.port || 3000
 const app = express()
 
 app.use(bodyParser.urlencoded({
@@ -27,6 +26,6 @@ mongoose
 
 app.use("/users", users)
 
-app.listen(port, function () {
+app.listen(port = (process.env.port || 3000), function () {
     console.log(`App listening on port ${port}, Database: ${databaseName}`);
 });
