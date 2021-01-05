@@ -26,6 +26,6 @@ mongoose
 
 app.use("/users", users)
 
-app.listen(port = (process.env.port || 3000), function () {
+app.listen(port = (process.env.PORT || 3000), function () {
     console.log(`App listening on port ${port}, Database: ${databaseName}`);
 });
