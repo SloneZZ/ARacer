@@ -52,7 +52,6 @@ router.post("/register", (req, res, next) => {
                 const password = req.body.password
 
                 bcrypt.hash(password, saltRounds, (err, hash) => {
-                    if (err) throw err
                     new userModel ({
                         firstname: req.body.firstname,
                         lastname: req.body.lastname,
