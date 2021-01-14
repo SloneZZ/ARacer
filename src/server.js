@@ -9,7 +9,7 @@ const databaseUser = 'Raphael:aracer123'
 const connectionURL = `mongodb+srv://${databaseUser}@aracer.w4nfr.mongodb.net/${databaseName}?retryWrites=true&w=majority` || `mongodb://127.0.0.1:27017/${databaseName}`
 
 const app = express()
-const withAuth = require('/middlewares/isAuthorized')
+const withAuth = require('../middlewares/isAuthorized')
 
 app.use(bodyParser.urlencoded({
     extended: true,
