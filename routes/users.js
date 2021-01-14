@@ -5,85 +5,39 @@ const userModel = require('../models/user')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
-const saltRounds = 13; // for bcrypt; TODO: check what this does
-
+const saltRounds = 13; // for bcrypt; TODO: check what this does#
+const signature = '*!AR4c3r_?*'
 
 router.post("/login", (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
     // Find a user via email
-    userModel.findOne({ email })
+    const user = userModel.findOne({ email })
         .then(user => {
             // Check if the user exists
             if (!user) {
-                return res.status(404).json({emailnotfound: "Email not found" })
+                return res.status(404).send("User not found")
             }
             // Check if the password is correct
             bcrypt.compare(password, user.password).then(passwordCorrect => {
                 if (passwordCorrect) {
-                    // Password is correct
+                    // Password is correct -> create a JWT
                     let verifyOptions = {
-                        issuer: 'ARacer',
-                        subject: user.email,
-                        audience: 'https://aracer-db.herokuapp.com/', // ARacer URL
                         expiresIn: "12h",
-                        algorithm: "RS256" // Does this matter?
                     }
-                    // Payload: user; secretOrPrivateKey: ?; options: verifyOptions, callback: error + token
-                    // TODO: get a valid private key
-                    jwt.sign({user}, 'secret', verifyOptions, (err, token) => {
-                        res.json({
+                    // Payload: user; secretOrPrivateKey: *!AR4c3r_?*'; options: verifyOptions, callback: error + token
+                    jwt.sign({ user,}, signature, verifyOptions, (err, token) => {
+                        res.send({
                             token: token,
-                            message: `Login successful, hello ${user.firstname}`
+                            message: `Successfully logged in, hello ${user.firstname}`
                         })
                     })
-
                 }
                 else {
-                    return res.status(404).json({ passwordincorrect: "Password incorrect, please make sure you haven't made any typos" }) // Notify that the password was incorrect
+                    return res.status(404).send("Password incorrect, please make sure you haven't made any typos") // Notify that the password was incorrect
                 }
             })
         })
-})
-
-router.post("/login2", async (req, res, next) => {
-    const email = req.body.email;
-    const password = req.body.password;
-    // Find a user via email
-    try {
-        const user = await userModel.findOne({ email })
-        // Check if the user exists
-        if (!user) {
-            return res.status(404).json({emailnotfound: "Email not found" })
-        }
-        // Check if the password is correct
-        const passwordCorrect = await bcrypt.compare(password, user.password)
-        if (passwordCorrect) {
-            // Password is correct
-            let verifyOptions = {
-                issuer: 'ARacer',
-                subject: user.email,
-                audience: 'https://aracer-db.herokuapp.com/', // ARacer URL
-                expiresIn: "12h",
-                algorithm: "RS256" // Does this matter?
-            }
-            // Payload: user; secretOrPrivateKey: ?; options: verifyOptions, callback: error + token
-            // TODO: get a valid private key
-            jwt.sign({user}, 'secret', verifyOptions, (err, token) => {
-                if (err) throw err
-                res.json({
-                    token
-                })
-            })
-        }
-        else {
-            return res.status(404).json({ passwordincorrect: "Password incorrect, please make sure you haven't made any typos" }) // Notify that the password was incorrect
-        }
-    } catch (e) {
-        console.log("Error Message: " + e)
-        return res.status(404).json({})
-    }
-    // TODO: .catch
 })
 
 router.post("/register", (req, res, next) => {
@@ -99,18 +53,18 @@ router.post("/register", (req, res, next) => {
 
                 bcrypt.hash(password, saltRounds, (err, hash) => {
                     if (err) throw err
-                    new userModel({
+                    new userModel ({
                         firstname: req.body.firstname,
                         lastname: req.body.lastname,
                         email: req.body.email,
                         password: hash,
                     })
-                        .save()
-                        .then(user => res.send(user)) // Send the user back as a confirmation that it worked
-                        .catch(err => {
-                            console.log(err)
-                            res.status(404).send(err) // Send errorcode 404 if something didn't work
-                        })
+                    .save()
+                    .then(() => res.send("User successfully created")) // Send back a confirmation that registering worked
+                    .catch(err => {
+                        console.log(err)
+                        res.status(404).send(err) // Send error code 404 and the error message if something didn't work
+                    })
                 })
             }
         })
@@ -124,7 +78,7 @@ router.get("/allUsers", (req, res, next) => { //R
         .then(users => res.send(users))
         .catch(err => {
             console.log(err)
-            res.status(404).send(err)
+            res.status(404).send(err) // Send error code 404 and the error message if something didn't work
         })
 })
 
