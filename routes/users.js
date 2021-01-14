@@ -5,7 +5,7 @@ const userModel = require('../models/user')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
-const saltRounds = 13; // for bcrypt; TODO: check what this does#
+const saltRounds = 13; // for bcrypt; TODO: check what this does
 const signature = '*!AR4c3r_?*'
 
 router.post("/login", (req, res, next) => {
@@ -46,7 +46,7 @@ router.post("/register", (req, res, next) => {
     userModel.findOne({ email })
         .then(user => {
             if (user) {
-                return res.status(404).json({ email: "Email already exists "})
+                return res.status(404).send("Email already exists")
             }
             else {
                 const password = req.body.password
