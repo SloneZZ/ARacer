@@ -16,14 +16,6 @@ export class Login extends React.Component {
                 </div>
                 <div className="form">
                     <div className="form-group">
-                        <label htmlFor="firstname">Firstname</label>
-                        <input type="text" name="firstname" placeholder="firstname"/>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="lastname">Lastname</label>
-                        <input type="text" name="lastname" placeholder="lastname"/>
-                    </div>
-                    <div className="form-group">
                         <label htmlFor="email">E-Mail</label>
                         <input type="email" name="email" placeholder="email"/>
                     </div>

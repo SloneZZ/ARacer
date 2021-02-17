@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/SloneZZ/aracerstatic/css/main.a453b94e.chunk.css",
-    "main.js": "/SloneZZ/aracerstatic/js/main.c69ac3b5.chunk.js",
-    "main.js.map": "/SloneZZ/aracerstatic/js/main.c69ac3b5.chunk.js.map",
+    "main.css": "/SloneZZ/aracerstatic/css/main.457717e6.chunk.css",
+    "main.js": "/SloneZZ/aracerstatic/js/main.b695af97.chunk.js",
+    "main.js.map": "/SloneZZ/aracerstatic/js/main.b695af97.chunk.js.map",
     "runtime-main.js": "/SloneZZ/aracerstatic/js/runtime-main.c1a9c7dd.js",
     "runtime-main.js.map": "/SloneZZ/aracerstatic/js/runtime-main.c1a9c7dd.js.map",
-    "static/js/2.3aec6f0d.chunk.js": "/SloneZZ/aracerstatic/js/2.3aec6f0d.chunk.js",
-    "static/js/2.3aec6f0d.chunk.js.map": "/SloneZZ/aracerstatic/js/2.3aec6f0d.chunk.js.map",
+    "static/js/2.3e47ee5c.chunk.js": "/SloneZZ/aracerstatic/js/2.3e47ee5c.chunk.js",
+    "static/js/2.3e47ee5c.chunk.js.map": "/SloneZZ/aracerstatic/js/2.3e47ee5c.chunk.js.map",
     "index.html": "/SloneZZ/aracerindex.html",
-    "static/css/main.a453b94e.chunk.css.map": "/SloneZZ/aracerstatic/css/main.a453b94e.chunk.css.map",
-    "static/js/2.3aec6f0d.chunk.js.LICENSE.txt": "/SloneZZ/aracerstatic/js/2.3aec6f0d.chunk.js.LICENSE.txt",
+    "static/css/main.457717e6.chunk.css.map": "/SloneZZ/aracerstatic/css/main.457717e6.chunk.css.map",
+    "static/js/2.3e47ee5c.chunk.js.LICENSE.txt": "/SloneZZ/aracerstatic/js/2.3e47ee5c.chunk.js.LICENSE.txt",
     "static/media/ARacer_logo.png": "/SloneZZ/aracerstatic/media/ARacer_logo.b0d8327e.png"
   },
   "entrypoints": [
     "static/js/runtime-main.c1a9c7dd.js",
-    "static/js/2.3aec6f0d.chunk.js",
-    "static/css/main.a453b94e.chunk.css",
-    "static/js/main.c69ac3b5.chunk.js"
+    "static/js/2.3e47ee5c.chunk.js",
+    "static/css/main.457717e6.chunk.css",
+    "static/js/main.b695af97.chunk.js"
   ]
 }

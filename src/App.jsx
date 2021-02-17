@@ -17,6 +17,7 @@ class App extends React.Component {
 
     changeState() {
         const { isLoginActive } = this.state;
+
         if (isLoginActive) {
             this.rightSide.classList.remove("right");
             this.rightSide.classList.add("left");
@@ -25,7 +26,7 @@ class App extends React.Component {
             this.rightSide.classList.add("right");
         }
 
-        this.setState((prevState) => ({ isLoginActive: !prevState.isLoginActive})); // toggle between states
+        this.setState(prevState => ({ isLoginActive: !prevState.isLoginActive})); // toggle between states
     }
 
     render() {
@@ -35,9 +36,13 @@ class App extends React.Component {
         return (
             <div className="App">
                 <div className="Login">
-                    <div className="container">
-                        {isLoginActive && <Login containerRef={ref => (this.current = ref)}/> }
-                        {!isLoginActive && <Register containerRef={ref => (this.current = ref)}/> }
+                    <div className="container" ref={ref => (this.container = ref)}>
+                        {isLoginActive && (
+                            <Login containerRef={ref => (this.current = ref)}/>
+                        )}
+                        {!isLoginActive && (
+                            <Register containerRef={ref => (this.current = ref)}/>
+                        )}
                     </div>
                     <RightSide
                         current={current}
