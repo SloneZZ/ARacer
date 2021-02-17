@@ -2,13 +2,14 @@ const jwt = require("jsonwebtoken")
 const signature = '*!AR4c3r_?*'
 
 const withAuth = function(req, res, next) {
-    const authHeader = req.headers.authorization
+    const token = req.query.authorization
+    //const authHeader = req.headers.authorization
 
-    if (!authHeader) {
+    if (!token) { //if (!authHeader)
         res.status(401).send('Unauthorized: no token provided')
     }
     else {
-        const token = authHeader.split(' ')[1];
+        // const token = authHeader.split(' ')[1];
 
         jwt.verify(token, signature, function(err, user) {
             if (err) {
