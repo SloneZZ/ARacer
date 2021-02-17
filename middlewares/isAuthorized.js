@@ -2,20 +2,20 @@ const jwt = require("jsonwebtoken")
 const signature = '*!AR4c3r_?*'
 
 const withAuth = function(req, res, next) {
-    const token = req.body.token
+    const authHeader = req.headers.authorization
 
-    if (!token) {
+    if (!authHeader) {
         res.status(401).send('Unauthorized: no token provided')
     }
     else {
-        jwt.verify(token, signature, function(err, decoded) {
+        const token = authHeader.split(' ')[1];
+
+        jwt.verify(token, signature, function(err, user) {
             if (err) {
                 res.status(401).send('Unauthorized: token is invalid')
             }
             else {
-                req.email = decoded.email
-                //req.firstname = decoded.firstname
-                //req.lastname = decoded.lastname
+                req.user = user
                 next()
             }
         })
@@ -23,3 +23,4 @@ const withAuth = function(req, res, next) {
 }
 
 module.exports = withAuth;
+

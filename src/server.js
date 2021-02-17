@@ -32,6 +32,11 @@ app.get('/checkToken', withAuth, function(req, res) {
     res.sendStatus(200);
 })
 
+app.get('/testme', function(req, res) {
+    const bearerHeader = req.headers.authorization;
+    console.log(bearerHeader)
+})
+
 app.listen(port = (process.env.PORT || 3000), function () {
     console.log(`App listening on port ${port}, Database: ${databaseName}`);
 });

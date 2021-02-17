@@ -34,7 +34,7 @@ router.post("/login", (req, res, next) => {
                     })
                 }
                 else {
-                    return res.status(404).send("Password incorrect, please make sure you haven't made any typos") // Notify that the password was incorrect
+                    return res.status(404).send("Username or Password incorrect") // Notify that the password was incorrect
                 }
             })
         })
